@@ -32,7 +32,7 @@ CDS not gathered:
 Tested only with a Refseq gff file. Genome build should be input as '37' or '38'.
 
 ```bash
-python gff2tsv.py ${gff_file} -f ${flank} -o ${output_name} -b ${genome_build}
+python gff2tsv.py ${gff_file} -f ${flank} -o ${output_name} -s ${gene_symbols_output_name} -b ${genome_build}
 ```
 
 ### Outputs
