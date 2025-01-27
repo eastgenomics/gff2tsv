@@ -264,8 +264,8 @@ def write_tsv(
         # split on ":" i.e. ["HGNC", "HGNC:1"]
         # get the last element i.e. get the actual HGNC id
         hgnc_id = hgnc_list[0].split(":", 1)[-1]
-
-        gene_symbol = feature.attributes.get("gene")
+        gene_symbols = feature.attributes.get("gene")
+        gene_symbol = ','.join(gene_symbols)
 
         # get the parent id and extract transcript name from it
         parent = db[feature.attributes["Parent"][0]]
