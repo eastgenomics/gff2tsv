@@ -224,6 +224,24 @@ def get_transcripts_to_remove(db, data):
     return transcripts_to_remove
 
 
+def write_sorted_data_to_file(filename, data):
+    """
+    Write sorted and filtered data from the GFF to file
+
+    Args:
+        filename (str): Name of file to write out
+        data (list): List containing data to write
+    """
+    try:
+        with open(filename, "w") as outfile:
+            for line in data:
+                str_line = [str(l) for l in line]
+                outfile.write("\t".join(str_line) + "\n")
+    except IOError as e:
+        print(f"Error writing to {filename}: {e}")
+        raise
+
+
 def write_output_tsvs(
     db, data, transcripts_to_remove, gff, flank, refseq_chrom,
     hgnc_output_name=None, symbol_output_name=None
@@ -305,18 +323,10 @@ def write_output_tsvs(
     )
 
     print(f"Writing in {hgnc_output_name}...")
-    with open(hgnc_output_name, "w") as f:
-        for line in sorted_data:
-            str_line = [str(l) for l in line]
-            f.write("\t".join(str_line))
-            f.write("\n")
+    write_sorted_data_to_file(hgnc_output_name, sorted_data)
 
     print(f"Writing in {symbol_output_name}...")
-    with open(symbol_output_name, "w") as f:
-        for line in sorted_symbol:
-            str_line = [str(l) for l in line]
-            f.write("\t".join(str_line))
-            f.write("\n")
+    write_sorted_data_to_file(symbol_output_name, sorted_symbol)
 
 
 def main(build, gff, flank, hgnc_output_name, symbols_output_name):
@@ -333,12 +343,12 @@ def main(build, gff, flank, hgnc_output_name, symbols_output_name):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("gff", help="Refseq GFF file to parse")
+    parser.add_argument("-g", "--gff", help="Refseq GFF file to parse")
     parser.add_argument(
         "-f", "--flank", default=0, type=int, help="Flank to add the features"
     )
     parser.add_argument(
-        "-h", "--hgnc_output_name", help=(
+        "-o", "--hgnc_output_name", help=(
             "Name of the output TSV file with HGNC IDs"
         )
     )

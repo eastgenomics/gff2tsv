@@ -31,13 +31,14 @@ CDS not gathered:
 
 Tested only with a Refseq gff file.
 ##### Inputs:
+- `-g (file)`: RefSeq GFF file.
 - `-f (int)`: How many bp to add as flank to either side of exons.
-- `-h (str)`: Name of the output exons TSV with HGNC IDs.
+- `-o (str)`: Name of the output exons TSV with HGNC IDs.
 - `-s (str)`: Name of the output exons TSV with gene symbols.
 - `-b (str)`: Genome build should be input as '37' or '38'.
 
 ```bash
-python gff2tsv.py ${gff_file} -f ${flank} -h ${hgnc_output_name} -s ${symbols_output_name} -b ${genome_build}
+python gff2tsv.py ${gff_file} -f ${flank} -o ${hgnc_output_name} -s ${symbols_output_name} -b ${genome_build}
 ```
 
 ### Outputs
